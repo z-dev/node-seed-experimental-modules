@@ -1,0 +1,66 @@
+{
+  "name": "node-seed",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "scripts": {
+    "check:node": "check-node-version --package",
+    "ci": "yarn run lint:js && yarn run test",
+    "precommit": "lint-staged && yarn run lint",
+    "eslint-check": "eslint --print-config .eslintrc | eslint-config-prettier-check",
+    "format:js": "prettier --single-quote --trailing-comma all --no-semi --print-width 180 --write \"{src,test}/**/*.js\"",
+    "postinstall": "yarn run check:node",
+    "lint": "yarn run lint:js",
+    "lint:js": "eslint ./src ./test --ext=js",
+    "lint:js:without:prettier": "yarn run lint:js -- --rule 'prettier/prettier: 0'",
+    "lint:watch": "nodemon --watch src --exec \"yarn run lint:without:prettier\"",
+    "lint:without:prettier": "yarn run lint:js:without:prettier",
+    "start": "node --experimental-modules src/index.mjs ",
+    "start:built": "forever build/index.js",
+    "start:debug": "node inspect --experimental-modules src/index.mjs",
+    "start:docker": "docker build -t lead-finder-server . && docker run --rm -it lead-finder-server",
+    "test": "neutrino test --use neutrino-preset-node neutrino-preset-mocha",
+    "test:watch": "nodemon -w src -w test --exec 'yarn run test'"
+  },
+  "dependencies": {
+    "lodash": "^4.2.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "chai": "^4.0.1",
+    "chai-moment": "^0.1.0",
+    "check-node-version": "^2.1.0",
+    "eslint": "^3.14.1",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-config-prettier": "^2.1.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-prettier": "^2.0.1",
+    "forever": "^0.15.3",
+    "husky": "^1.0.1",
+    "lint-staged": "^7.3.0",
+    "nodemon": "^1.8.1",
+    "prettier": "^1.2.2",
+    "sort-package-json": "^1.15.0"
+  },
+  "engines": {
+    "node": ">= 10.13 < 11"
+  },
+  "engine-strict": true,
+  "lint-staged": {
+    "{src,test}/**/*.js": [
+      "yarn format:js --",
+      "git add"
+    ],
+    "package.json": [
+      "sort-package-json",
+      "git add"
+    ]
+  },
+  "neutrino": {
+    "options": {
+      "mocha": {
+        "recursive": true
+      }
+    }
+  }
+}

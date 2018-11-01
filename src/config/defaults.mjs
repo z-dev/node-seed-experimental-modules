@@ -1,1 +1,1 @@
-export default {banana: 'rama'}
+export default { banana: 'rama' }

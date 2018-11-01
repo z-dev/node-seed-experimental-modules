@@ -8,7 +8,7 @@
     "ci": "yarn run lint:js && yarn run test",
     "precommit": "lint-staged && yarn run lint",
     "eslint-check": "eslint --print-config .eslintrc | eslint-config-prettier-check",
-    "format:js": "prettier --single-quote --trailing-comma all --no-semi --print-width 180 --write \"{src,test}/**/*.mjs\"",
+    "format:js": "prettier --single-quote --trailing-comma all --no-semi --print-width 180 --write \"{src,test}/**/*.{,m}js\"",
     "postinstall": "yarn run check:node",
     "lint": "yarn run lint:js",
     "lint:js": "eslint ./src ./test --ext=js",

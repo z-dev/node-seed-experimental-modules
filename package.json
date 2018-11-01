@@ -44,7 +44,7 @@
     "sort-package-json": "^1.15.0"
   },
   "engines": {
-    "node": ">= 10.13 < 11"
+    "node": ">= 10.12 < 11"
   },
   "engine-strict": true,
   "lint-staged": {

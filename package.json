@@ -15,11 +15,11 @@
     "lint:js:without:prettier": "yarn run lint:js -- --rule 'prettier/prettier: 0'",
     "lint:watch": "nodemon --watch src --exec \"yarn run lint:without:prettier\"",
     "lint:without:prettier": "yarn run lint:js:without:prettier",
-    "start": "node --experimental-modules src/index.mjs ",
+    "start": "node --experimental-modules --loader ./customLoader.mjs src/index.mjs ",
     "start:built": "forever build/index.js",
-    "start:debug": "node inspect --experimental-modules src/index.mjs",
+    "start:debug": "node inspect --experimental-modules --loader ./customLoader.mjs src/index.mjs",
     "start:docker": "docker build -t lead-finder-server . && docker run --rm -it lead-finder-server",
-    "test": "neutrino test --use neutrino-preset-node neutrino-preset-mocha",
+    "test": "NODE_OPTIONS=\"--experimental-modules --loader ./customLoader.mjs\" node_modules/.bin/mocha test/index.js --delay",
     "test:watch": "nodemon -w src -w test --exec 'yarn run test'"
   },
   "dependencies": {
@@ -38,6 +38,7 @@
     "forever": "^0.15.3",
     "husky": "^1.0.1",
     "lint-staged": "^7.3.0",
+    "mocha": "^5.2.0",
     "nodemon": "^1.8.1",
     "prettier": "^1.2.2",
     "sort-package-json": "^1.15.0"
@@ -55,12 +56,5 @@
       "sort-package-json",
       "git add"
     ]
-  },
-  "neutrino": {
-    "options": {
-      "mocha": {
-        "recursive": true
-      }
-    }
   }
 }

@@ -1,4 +1,3 @@
-import 'module-alias/register'
 import _ from 'lodash'
 import defaults from '~/config/defaults'
 

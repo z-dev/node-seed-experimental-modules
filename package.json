@@ -8,18 +8,18 @@
     "ci": "yarn run lint:js && yarn run test",
     "precommit": "lint-staged && yarn run lint",
     "eslint-check": "eslint --print-config .eslintrc | eslint-config-prettier-check",
-    "format:js": "prettier --single-quote --trailing-comma all --no-semi --print-width 180 --write \"{src,test}/**/*.{,m}js\"",
+    "format:js": "prettier --single-quote --trailing-comma all --no-semi --print-width 180 --write \"{src,test}/**/*.js\"",
     "postinstall": "yarn run check:node",
     "lint": "yarn run lint:js",
     "lint:js": "eslint ./src ./test --ext=js",
     "lint:js:without:prettier": "yarn run lint:js -- --rule 'prettier/prettier: 0'",
     "lint:watch": "nodemon --watch src --exec \"yarn run lint:without:prettier\"",
     "lint:without:prettier": "yarn run lint:js:without:prettier",
-    "start": "node --experimental-modules --loader ./customLoader.mjs src/index.mjs ",
+    "start": "node --es-module-specifier-resolution=node --experimental-loader ./customLoader.mjs src/index.js",
     "start:built": "forever build/index.js",
-    "start:debug": "node inspect --experimental-modules --loader ./customLoader.mjs src/index.mjs",
+    "start:debug": "node inspect --es-module-specifier-resolution=node --experimental-loader ./customLoader.mjs src/index.js",
     "start:docker": "docker build -t lead-finder-server . && docker run --rm -it lead-finder-server",
-    "test": "NODE_OPTIONS=\"--experimental-modules --loader ./customLoader.mjs\" node_modules/.bin/mocha test/index.js --delay",
+    "test": "NODE_OPTIONS=\"--experimental-specifier-resolution node --experimental-loader ./customLoader.mjs\" node_modules/.bin/mocha test/index.cjs --delay",
     "test:watch": "nodemon -w src -w test --exec 'yarn run test'"
   },
   "dependencies": {
@@ -44,7 +44,7 @@
     "sort-package-json": "^1.15.0"
   },
   "engines": {
-    "node": ">= 10.12 < 11"
+    "node": ">= 13.4 < 14"
   },
   "engine-strict": true,
   "lint-staged": {
@@ -56,5 +56,6 @@
       "sort-package-json",
       "git add"
     ]
-  }
+  },
+  "type": "module"
 }

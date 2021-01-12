@@ -38,3 +38,5 @@ dist
 build
 
 .DS_Store
+
+.eslintcache

@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import defaults from '~/config/defaults'
+import defaults from './config/defaults'
 
 console.log(defaults)
 
